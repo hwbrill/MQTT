@@ -1,8 +1,9 @@
-#include "MQTT.h"
+#include "MQTT/MQTT.h"
 
 void callback(char* topic, byte* payload, unsigned int length);
 
 int led0 = D7;
+int In1 = D1;
 
 /**
  * if want to use IP address,
@@ -20,6 +21,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
     p[length] = NULL;
     String message(p);
     
+    if (message.equals("RGBON"))
+        RGB.control(true);
+        
+    if (message.equals("RGBOFF"))
+        RGB.control(false);
+        
     digitalWrite(led0, HIGH);
 
     if (message.equals("RED"))    
@@ -39,8 +46,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void setup() {
     
     pinMode(led0, OUTPUT);
-    
-    RGB.control(true);
+    pinMode(In1, INPUT_PULLDOWN);
     
     // connect to the server
     client.connect("connect");
@@ -48,7 +54,7 @@ void setup() {
     // publish/subscribe
     if (client.isConnected()) {
         RGB.color(0, 255, 0);
-        client.publish("RGB/Color","hello there!");
+        client.publish("RGB/Color","Control Online!");
         client.subscribe("RGB/Color");
     } else {
         RGB.color(255, 0, 0);
@@ -56,6 +62,14 @@ void setup() {
 }
 
 void loop() {
+    if (digitalRead(In1)) {
+        RGB.color(255, 0, 0);
+        delay(3000);
+        RGB.control(false);
+        client.publish("RGB/Color","Control Reset!");
+    }    
     if (client.isConnected())
         client.loop();
+        
+        
 }

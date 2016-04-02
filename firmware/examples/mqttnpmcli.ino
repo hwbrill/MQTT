@@ -45,6 +45,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 void setup() {
     
+    String myID = System.deviceID();
+    
     pinMode(led0, OUTPUT);
     pinMode(In1, INPUT_PULLDOWN);
     
@@ -54,7 +56,7 @@ void setup() {
     // publish/subscribe
     if (client.isConnected()) {
         RGB.color(0, 255, 0);
-        client.publish("RGB/Color","Control Online!");
+        client.publish("RGB/Color",myID " Control Online!");
         client.subscribe("RGB/Color");
     } else {
         RGB.color(255, 0, 0);

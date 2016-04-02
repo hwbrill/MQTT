@@ -1,4 +1,4 @@
-#include "MQTT-NPM-CLI/MQTT.h"
+#include "Particle/MQTT.h"
 
 void callback(char* topic, byte* payload, unsigned int length);
 

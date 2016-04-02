@@ -2,6 +2,8 @@
 
 void callback(char* topic, byte* payload, unsigned int length);
 
+String myID = System.deviceID();
+
 int led0 = D7;
 int In1 = D1;
 
@@ -45,8 +47,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 void setup() {
     
-    String myID = System.deviceID();
-    
     pinMode(led0, OUTPUT);
     pinMode(In1, INPUT_PULLDOWN);
     
@@ -56,8 +56,8 @@ void setup() {
     // publish/subscribe
     if (client.isConnected()) {
         RGB.color(0, 255, 0);
-        client.publish("RGB/Color",myID " Control Online!");
-        client.subscribe("RGB/Color");
+        client.publish(myID + "/RGB/Color","Control Online!");
+        client.subscribe(myID + "/RGB/Color");
     } else {
         RGB.color(255, 0, 0);
     }
@@ -68,7 +68,7 @@ void loop() {
         RGB.color(255, 0, 0);
         delay(3000);
         RGB.control(false);
-        client.publish("RGB/Color","Control Reset!");
+        client.publish(myID + "/RGB/Color","Control Reset!");
     }    
     if (client.isConnected())
         client.loop();

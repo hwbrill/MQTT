@@ -1,4 +1,4 @@
-#include "Particle/MQTT.h"
+#include "MQTT.h"
 
 void callback(char* topic, byte* payload, unsigned int length);
 

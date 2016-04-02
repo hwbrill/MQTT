@@ -1,4 +1,4 @@
-#include "MQTT/MQTT.h"
+#include "NPM_MQTT/MQTT.h"
 
 void callback(char* topic, byte* payload, unsigned int length);
 

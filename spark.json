@@ -1,6 +1,6 @@
 {
-  "name": "MQTT",
+  "name": "MQTT-NPM-CLI",
   "author": "hwbrill",
   "license": "MIT",
-  "version": "0.0.0"
+  "version": "0.0.01"
 }
